@@ -1,3 +1,3 @@
-# File List
+# VN Game List Manager
 
-Help to find files in folders faster
+Help to organize your VN game list

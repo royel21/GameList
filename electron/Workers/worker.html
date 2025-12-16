@@ -60,7 +60,7 @@
 
                 if (Codes) {
                   const newCode = getCode(Codes, Name, file);
-                  if (codes.includes(newCode) === false) {
+                  if (codes.find((c) => c.Codes === newCode.Codes) === undefined) {
                     codes.push(newCode);
                   }
                 }

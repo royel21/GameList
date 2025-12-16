@@ -1,0 +1,46 @@
+#navbar {
+  padding-top: 38px;
+  padding-left: 10px;
+  text-align: left;
+  border-bottom: 1px solid white;
+}
+
+#navbar label {
+  display: inline-block;
+  font-size: 19px;
+  font-weight: 600;
+  color: white;
+  transition: 0.3s all;
+  padding: 5px;
+  border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  cursor: pointer;
+}
+
+#navbar label {
+  cursor: pointer;
+}
+
+#navbar label i {
+  font-size: 1.4rem;
+  pointer-events: none;
+}
+
+#navbar input {
+  display: none;
+}
+
+#navbar input:checked + label {
+  background-color: white;
+  color: black;
+}
+
+#navbar input:checked + label i.fa-star {
+  color: #ffc107;
+}
+
+@media screen and (max-width: 515px) {
+  #navbar label span {
+    display: none;
+  }
+}

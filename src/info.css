@@ -1,0 +1,61 @@
+.info-container {
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+}
+
+h3 {
+  color: white;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.info {
+  position: relative;
+  background-color: rgb(22, 22, 22);
+  color: white;
+  width: 95%;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.info .fa-times {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.info > div {
+  text-align: center;
+  min-height: 35px;
+}
+
+.info .name {
+  font-size: 1.2rem;
+  background-color: rgb(153, 149, 149);
+}
+
+.info > div div:last-child {
+  text-align: left;
+  color: white;
+}
+.info input,
+.info textarea {
+  width: 100%;
+  height: auto;
+  background-color: rgb(34, 34, 34);
+  color: white;
+  border: none;
+  resize: none;
+  font-size: 12px;
+  text-align: left;
+}
+
+.info div:empty {
+  display: none;
+}

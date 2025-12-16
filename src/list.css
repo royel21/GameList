@@ -1,0 +1,12 @@
+#files-list li {
+  position: relative;
+}
+
+#files-list .actions {
+  position: absolute;
+  right: 0;
+}
+
+.mr-1 {
+  margin-right: 5px;
+}

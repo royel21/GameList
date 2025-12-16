@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <script>
+      const { ipcRenderer: ipc } = require("electron");
+
+      const remote = window.require("@electron/remote");
+      const { BrowserWindow } = remote;
+      let parentWin = {};
+
+      const basePath = remote.app.getAppPath();
+      const path = require("path");
+      const fs = require("fs-extra");
+      const winex = require("win-explorer");
+
+      const db = require(path.join(basePath, "Models"));
+      const jobs = [];
+      let fileTypes = [];
+
+      const send = (e, d) => {
+        parentWin.webContents?.send(e, d);
+      };
+
+      const getCode = (Codes, Name, file) => {
+        let AltName = "";
+        if (file.IsDirectory) {
+          const subFiles = winex.ListFiles(file.Path);
+          for (const subFile of subFiles) {
+            console.log(Name, subFile.Name);
+            if (subFile.Name.startsWith(Name)) {
+              AltName = subFile.Name.replace(".txt", "");
+              break;
+            }
+          }
+        }
+
+        return {
+          Codes,
+          AltName,
+        };
+      };
+
+      const dirScan = async () => {
+        while (jobs.length) {
+          const Id = jobs.pop();
+          const dir = await db.Directory.findOne({ where: { Id } });
+          try {
+            if (dir) {
+              await db.Game.destroy({ where: { DirectoryId: Id } });
+
+              const codes = [];
+
+              const files = winex.ListFiles(dir.Path);
+              let list = [];
+              for (const file of files) {
+                const mCode = file.Name.match(/ (v|r|RJ|VO|ST|G)\d+.*\d+$/gi);
+
+                let Codes = mCode ? mCode[0].trim() : "";
+                const Name = file.Name.replace(Codes, "").trim();
+
+                if (Codes) {
+                  const newCode = getCode(Codes, Name, file);
+                  if (codes.includes(newCode) === false) {
+                    codes.push(newCode);
+                  }
+                }
+
+                list.push({ Codes, Name, DirectoryId: Id, Path: file.Path });
+              }
+              await db.Game.bulkCreate(list);
+              if (codes.length) {
+                console.log(codes);
+                await db.Info.bulkCreate(codes, { ignoreDuplicates: true });
+              }
+            }
+          } catch (error) {
+            console.log(error);
+            send("error", { error });
+          }
+          send("removeJob", Id);
+          send("job-done", Id);
+        }
+      };
+      let working = false;
+
+      ipc.on("new-job", (e, { Id, winId, types }) => {
+        fileTypes = types || [];
+        if (!parentWin.webContents) parentWin = BrowserWindow.fromId(winId);
+        jobs.push(Id);
+        if (!working) {
+          working = true;
+          dirScan().then(() => {
+            working = false;
+            console.log("done");
+            send("all-jobs-done");
+            window.close();
+          });
+        }
+      });
+      window.addEventListener("beforeunload", () => send("all-jobs-done"));
+    </script>
+  </body>
+</html>

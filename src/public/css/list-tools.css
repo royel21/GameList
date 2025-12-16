@@ -1,0 +1,145 @@
+#count {
+  color: white;
+  font-size: 1.6rem;
+  width: 60px;
+}
+
+.filter {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.search-icon {
+  display: inline-block;
+  font-size: 20px;
+  color: white;
+  vertical-align: middle;
+  padding: 0 5px;
+}
+.search-icon i {
+  height: 29px;
+  line-height: 1.5;
+}
+select,
+input {
+  display: block;
+  width: 99.7%;
+  height: 28px;
+  padding: 0.375rem 0.4rem;
+  padding-right: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: none;
+}
+
+select:focus,
+input:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgb(13 110 253 / 25%);
+}
+
+.clear-icon {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input:valid + .clear-icon {
+  display: inline-block;
+}
+
+.clear-icon:active {
+  transform: scale(1.1);
+}
+
+#pager {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 150px;
+  min-width: 150px;
+}
+
+#pager span {
+  padding: 0 5px;
+  font-size: 1.7rem;
+  color: white;
+}
+#pager .p-input {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+#pager span:not(.p-input) {
+  cursor: pointer;
+}
+
+#pager span:active i {
+  transform: scale(1.2);
+}
+
+#pager input {
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-align: center;
+  border-radius: 0.25rem;
+  width: 100%;
+  font-size: 20px;
+  padding: 0 5px;
+}
+
+#pager input:focus {
+  color: #495057;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+}
+
+#pager .search-icon {
+  font-size: 25px;
+}
+
+#list #list-control span {
+  line-height: 1;
+}
+
+#controls {
+  display: flex;
+  flex-direction: row;
+}
+
+#controls button {
+  margin: 0 4px;
+  padding: 0.3rem 0.3rem;
+  line-height: 1.4;
+}
+
+#controls input {
+  height: 29px;
+  border-radius: 0;
+  border-right: 1px solid;
+}
+
+#modal-container.modal-br #modal {
+  width: 380px;
+}

@@ -1,0 +1,48 @@
+.input-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  padding: 0.30rem 0.25rem;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0 0 0.25rem 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  box-shadow: 0 0 0 0.02rem rgba(0, 0, 0, 0);
+  font-family: sans-serif;
+}
+
+textarea:focus {
+  color: #495057;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+}
+
+textarea:disabled {
+  background-color: rgb(177 177 172);
+  color: rgb(60 60 60);
+}
+
+.span-label {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  width: 100%;
+  min-width: max-content;
+  color: #495057;
+  background-color: #e9ecef;
+  padding: 0.375rem 0.25rem;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid #ced4da;
+  line-height: 1.4;
+  border-radius: 0.25rem 0.25rem 0 0;
+}

@@ -1,0 +1,12 @@
+#popup > div {
+  padding: 5px 10px;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+#popup > div:not(:last-child) {
+  border-bottom: 1px solid rgb(104, 101, 101);
+}
+
+#popup strong {
+  color: rgb(152, 210, 243);
+}

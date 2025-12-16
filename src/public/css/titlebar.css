@@ -1,0 +1,71 @@
+#title-bar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: fixed;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  background: rgba(67, 66, 75, 0.2);
+  z-index: 9999;
+  color: white;
+}
+
+#title-n {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-content: center;
+  padding: 3px 3px 3px 10px;
+  overflow: hidden;
+}
+#title-bar .files-count {
+  position: absolute;
+  font-size: 1.2rem;
+}
+.title {
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+#drag-region {
+  position: absolute;
+  top: -5px;
+  left: 3px;
+  right: 0;
+  height: 34px;
+  -webkit-app-region: drag;
+  z-index: 1;
+  cursor: grab;
+}
+
+.btn-sys {
+  display: inline-block;
+  width: 45px;
+  padding: 5.5px 10px;
+  font-size: 1.5rem;
+  -webkit-app-region: no-drag;
+  z-index: 99;
+  flex-shrink: 0;
+}
+
+.btn-sys:hover {
+  cursor: pointer;
+  background-color: rgba(53, 237, 243, 0.2);
+}
+
+.btn-sys:active i {
+  transform: scale(1.2);
+}
+
+.btn-sys-close:hover {
+  background-color: red;
+}
+
+#always-top:checked + i {
+  color: #00b8ff;
+}

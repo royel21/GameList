@@ -1,0 +1,34 @@
+#contextm {
+  display: inline-block;
+  background-color: #56450ff2;
+  width: 145px;
+  color: white;
+  position: fixed;
+  z-index: 9999;
+  border-radius: 5px;
+}
+#contextm ul {
+  margin: 0;
+  padding: 0;
+}
+
+#contextm li {
+  list-style-type: none;
+  padding: 5px 11px;
+  cursor: pointer;
+}
+
+#contextm li:not(:last-child) {
+  border-bottom: 1px solid white;
+}
+
+#contextm li:hover {
+  background-color: rgba(102, 108, 114, 0.9);
+}
+
+#contextm li:first-child:hover {
+  border-radius: 5px 5px 0 0;
+}
+#contextm li:last-child:hover {
+  border-radius: 0 0 5px 5px;
+}

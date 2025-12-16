@@ -1,0 +1,34 @@
+#app-config {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5px;
+  border-bottom: 1px solid white;
+}
+
+#app-config label {
+  width: 130px;
+  background-color: silver;
+  line-height: 1.6;
+  font-weight: 600;
+}
+#app-config input {
+  padding-right: 5px;
+}
+
+#app-f-list {
+  height: calc(100% - 90px);
+}
+
+#app-f-list #files-list {
+  padding-bottom: 10px;
+}
+
+#f-index {
+  font-weight: 600;
+  border-right: 1px solid;
+  padding-right: 2px;
+}
+
+.mr-1 {
+  padding-right: 5px;
+}

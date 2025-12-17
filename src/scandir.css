@@ -1,0 +1,10 @@
+.scan-list li {
+  position: relative;
+}
+
+.g-count {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}

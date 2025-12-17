@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { path, shell, fs, ipc, selectDirectory } from "./Utils/utils";
 import { addDirectory, getDirectories, getJobs } from "./Utils/db";
 import EditDirectory from "./Components/EditDirectory";
+import "./scandir.css";
 
 const ScanList = () => {
   const [dirList, setDirList] = useState([]);
@@ -67,10 +68,14 @@ const ScanList = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.querySelector(".title").textContent = (dirList.length || 0) + " - Scan List";
+  });
+
   return (
     <>
       {showEdit && <EditDirectory dir={showEdit} hide={() => setShowEdit()} />}
-      <div id="list">
+      <div id="list" className="scan-list">
         <div ref={listRef} id="files-list">
           <ul>
             {dirList.map((f, i) => (
@@ -81,6 +86,7 @@ const ScanList = () => {
                   onClick={() => syncDir(f)}
                 ></i>{" "}
                 <i className={`fas fa-edit`} onClick={() => setShowEdit(f)}></i> {f.Name}
+                <span className="g-count">{f.dataValues.Count}</span>
               </li>
             ))}
           </ul>

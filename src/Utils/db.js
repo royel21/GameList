@@ -74,7 +74,14 @@ export const getGames = async (filter = "") => {
 };
 /****************************Scan Dir********************************************/
 export const getDirectories = async () => {
-  return await db.Directory.findAll();
+  return await db.Directory.findAll({
+    attributes: [
+      "Id",
+      "Name",
+      "Path",
+      [db.sqlze.literal(`(SELECT COUNT(*) FROM Games WHERE Games.DirectoryId = Directories.Id)`), "Count"],
+    ],
+  });
 };
 
 const jobs = [];

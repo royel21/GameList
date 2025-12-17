@@ -3,6 +3,7 @@ import { path, shell, fs, ipc, selectDirectory } from "./Utils/utils";
 import { addDirectory, getDirectories, getJobs } from "./Utils/db";
 import EditDirectory from "./Components/EditDirectory";
 import "./scandir.css";
+import usePopup2 from "./Hooks/usePopup2";
 
 const ScanList = () => {
   const [dirList, setDirList] = useState([]);
@@ -72,6 +73,8 @@ const ScanList = () => {
     document.querySelector(".title").textContent = (dirList.length || 0) + " - Scan List";
   });
 
+  usePopup2();
+
   return (
     <>
       {showEdit && <EditDirectory dir={showEdit} hide={() => setShowEdit()} />}
@@ -79,7 +82,7 @@ const ScanList = () => {
         <div ref={listRef} id="files-list">
           <ul>
             {dirList.map((f, i) => (
-              <li key={"f-" + i} onDoubleClick={() => openDir(f)} className="popup-msg" tabIndex="0" data-msg={f.Path}>
+              <li key={"f-" + i} onDoubleClick={() => openDir(f)} className="popup-msg2" tabIndex="0" data-msg={f.Path}>
                 <i className="fas fa-trash-alt" onClick={(e) => removeDir(f, e)}></i>
                 <i
                   className={`fas fa-sync ${getJobs().includes(f.Id) && "fa-spin"}`}

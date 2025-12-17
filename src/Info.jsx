@@ -29,6 +29,8 @@ const Info = ({ file, hide }) => {
       setData({ ...data });
     }
 
+    console.log(file);
+
     file.Name = data.Name;
     file.Codes = data.Codes;
     file.Path = data.Path;

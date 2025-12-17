@@ -53,7 +53,7 @@
               const files = winex.ListFiles(dir.Path);
               let list = [];
               for (const file of files) {
-                const mCode = file.Name.match(/ (v|r|RJ|VO|ST|G)\d+.*\d+$/gi);
+                const mCode = file.Name.replace(/\.(rar|zip|7z)/g, "").match(/ (v|r|RJ|VO|ST|G)\d+.*\d+$/gi);
 
                 let Codes = mCode ? mCode[0].trim() : "";
                 const Name = file.Name.replace(Codes, "").trim();

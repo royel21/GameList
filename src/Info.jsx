@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./info.css";
-import { fs } from "./Utils/utils";
+import { fs, getCodes, path } from "./Utils/utils";
 import { createInfo } from "./Utils/db";
 
 const Info = ({ file, hide }) => {
@@ -24,19 +24,29 @@ const Info = ({ file, hide }) => {
       return setError("The specified path don't exists.");
     }
 
+    if (!data.Codes) {
+      data.Codes = getCodes(file);
+    }
+
     if (file.Name !== data.Name) {
-      data.Path = file.Path.replace(file.Name, data.Name);
-      fs.renameSync(file.Path, data.Path);
+      const basePath = path.dirname(file.Path);
+      data.Path = path.join(basePath, data.Name);
+      try {
+        fs.renameSync(file.Path, data.Path);
+      } catch (error) {
+        console.log(error);
+      }
       setData({ ...data });
     }
 
-    file.Name = data.Name;
+    file.Name = data.Name.trim();
     file.Codes = data.Codes.trim();
-    file.Path = data.Path;
+    file.Path = data.Path.trim();
 
     if (file.Name.includes(file.Codes)) {
       file.Name = file.Name.replace(file.Codes, "").trim();
     }
+
     const info = {
       Codes: data.Codes,
       AltName: data.AltName,
@@ -44,6 +54,7 @@ const Info = ({ file, hide }) => {
       ReleaseDate: data.ReleaseDate,
       Description: data.Description,
     };
+
     if (file.Info == null) {
       file.Info = await createInfo(info);
     } else {

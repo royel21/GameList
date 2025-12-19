@@ -143,3 +143,8 @@ export const isDate = (val) => {
 
   return !isNaN(d.getTime());
 };
+
+export const getCodes = (file) => {
+  const mCode = file.Name.replace(/\.(rar|zip|7z)/g, "").match(/ (v|r|RJ|VO|ST|G)\d+.*\d+$/gi);
+  return mCode ? mCode[0].trim() : "";
+};

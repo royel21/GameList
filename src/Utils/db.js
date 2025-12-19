@@ -121,7 +121,7 @@ export const addDirectory = async (d) => {
 };
 
 let Worker;
-const show = false;
+const show = true;
 export const AddJob = async (job) => {
   if (!jobs.includes(job)) {
     jobs.push(job);
@@ -149,6 +149,10 @@ export const AddJob = async (job) => {
   }
 
   return Worker;
+};
+
+export const createInfo = async (info) => {
+  return await db.Info.create(info);
 };
 
 export const updateDirectory = async (dir, newPath) => {

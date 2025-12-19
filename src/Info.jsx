@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./info.css";
 import { fs } from "./Utils/utils";
+import { createInfo } from "./Utils/db";
 
 const Info = ({ file, hide }) => {
   const [data, setData] = useState({ ...file.dataValues, ...(file.Info?.dataValues || {}) });
@@ -29,20 +30,25 @@ const Info = ({ file, hide }) => {
       setData({ ...data });
     }
 
-    console.log(file);
-
     file.Name = data.Name;
-    file.Codes = data.Codes;
+    file.Codes = data.Codes.trim();
     file.Path = data.Path;
 
-    file.Info.Codes = data.Codes;
-    file.Info.AltName = data.AltName;
-    file.Info.Company = data.Company;
-    file.Info.ReleaseDate = data.ReleaseDate;
-    file.Info.Description = data.Description;
-
-    await file.Info.save();
-    await file.Info.reload();
+    if (file.Name.includes(file.Codes)) {
+      file.Name = file.Name.replace(file.Codes, "").trim();
+    }
+    const info = {
+      Codes: data.Codes,
+      AltName: data.AltName,
+      Company: data.Company,
+      ReleaseDate: data.ReleaseDate,
+      Description: data.Description,
+    };
+    if (file.Info == null) {
+      file.Info = await createInfo(info);
+    } else {
+      await file.Info.update(info);
+    }
 
     await file.save();
     await file.reload();

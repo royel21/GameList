@@ -41,8 +41,8 @@ export default function usePopup(games) {
       [...document.querySelectorAll(".popup-show")].forEach((el) => hidePopup(el));
 
       const element = e.target.closest(".popup-msg") || e.target;
-      if (element.classList.contains("popup-msg")) {
-        const file = games.find((g) => g.Id == +element.id);
+      const file = games.find((g) => g.Id == +element.id);
+      if (element.classList.contains("popup-msg") && file) {
         showPop(element, file);
       }
     },

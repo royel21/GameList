@@ -26,7 +26,6 @@
         if (file.IsDirectory) {
           const subFiles = winex.ListFiles(file.Path);
           for (const subFile of subFiles) {
-            console.log(Name, subFile.Name);
             if (subFile.Name.startsWith(Name)) {
               AltName = subFile.Name.replace(".txt", "");
               break;
@@ -69,7 +68,6 @@
               }
               await db.Game.bulkCreate(list);
               if (codes.length) {
-                console.log(codes);
                 await db.Info.bulkCreate(codes, { ignoreDuplicates: true });
               }
             }
@@ -93,7 +91,7 @@
             working = false;
             console.log("done");
             send("all-jobs-done");
-            window.close();
+            // window.close();
           });
         }
       });

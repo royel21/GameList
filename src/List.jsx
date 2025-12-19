@@ -58,7 +58,10 @@ const List = () => {
   };
 
   const paste = () => {
-    const text = clipboard.readText();
+    const text = clipboard
+      .readText()
+      .trim()
+      .replace(/:|\?|\*|<|>|\/|\\|"/g, "");
     if (text) {
       setFilter(text);
       load(text, 0);

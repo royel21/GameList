@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { getGames } from "./Utils/db";
 import { shell, fs, clipboard } from "./Utils/utils";
 import Input from "./Components/Input";
@@ -8,10 +8,8 @@ import Info from "./Info.jsx";
 import "./list.css";
 import "./popup.css";
 
-const List = () => {
-  const [filter, setFilter] = useState();
+const List = ({ filter, setFilter }) => {
   const [showM, setShowM] = useState();
-  const filterRef = useRef({ filter });
   const [showInfo, setShowInfo] = useState();
 
   const [datas, setDatas] = useState([]);
@@ -20,7 +18,6 @@ const List = () => {
     const result = await getGames(ftl);
 
     setFilter(ftl);
-    filterRef.current.filter = ftl;
     setDatas(result);
   };
 
@@ -71,18 +68,14 @@ const List = () => {
   useEffect(() => {
     let isMounted = true;
 
-    getGames(filterRef.current.filter, 0).then((result) => {
+    getGames(filter).then((result) => {
       if (isMounted) {
         setDatas(result);
       }
     });
 
     return () => (isMounted = false);
-  }, []);
-
-  const reload = () => {
-    getGames(filterRef.current.filter, 0).then(setDatas);
-  };
+  }, [filter]);
 
   useEffect(() => {
     document.querySelector(".title").textContent = (datas.length || 0) + " - Game List";
@@ -93,7 +86,7 @@ const List = () => {
   return (
     <>
       {showInfo && <Info file={showInfo} hide={() => setShowInfo()} />}
-      {showM && <FileContextMenu data={showM} hide={() => setShowM()} reload={reload} favs={true} />}
+      {showM && <FileContextMenu data={showM} hide={() => setShowM()} favs={true} />}
       <div id="list">
         <div id="files-list" onClick={() => setShowM()} onWheel={() => (showM ? setShowM() : "")}>
           <ul>

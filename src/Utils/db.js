@@ -121,7 +121,7 @@ export const addDirectory = async (d) => {
 };
 
 let Worker;
-const show = true;
+const show = false;
 export const AddJob = async (job) => {
   if (!jobs.includes(job)) {
     jobs.push(job);

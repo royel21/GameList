@@ -49,13 +49,13 @@ const Info = ({ file, hide }) => {
 
     const info = {
       Codes: data.Codes,
-      AltName: data.AltName,
-      Company: data.Company,
+      AltName: data.AltName?.trim(),
+      Company: data.Company?.trim(),
       ReleaseDate: data.ReleaseDate,
-      Description: data.Description,
+      Description: data.Description?.trim(),
     };
 
-    if (file.Info == null) {
+    if (file.Info == null && file.Codes.trim()) {
       file.Info = await createInfo(info);
     } else {
       await file.Info.update(info);

@@ -5,15 +5,17 @@ import TabItem from "./Components/TabItem";
 import ToolBar from "./Components/Toolbar";
 import ScanList from "./ScanList";
 
-const getTab = () => ({
-  list: <List />,
-  scanlist: <ScanList />,
+const getTab = (p) => ({
+  list: <List {...p} />,
+  scanlist: <ScanList {...p} />,
 });
 
 const FilesList = () => {
+  const [filter, setFilter] = useState("");
   const [tab, setTab] = useState("list");
   const selectTab = ({ target: { id } }) => setTab(id.replace("tab-", ""));
 
+  const p = { filter, setFilter };
   return (
     <>
       <ToolBar />
@@ -25,7 +27,7 @@ const FilesList = () => {
           <i className="fas fa-cog"></i> <span>Config</span>
         </TabItem>
       </div>
-      {getTab()[tab]}
+      {getTab(p)[tab]}
     </>
   );
 };

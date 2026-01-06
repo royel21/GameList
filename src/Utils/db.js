@@ -55,12 +55,15 @@ const getFilters = (splt, filter) => {
   };
 };
 
-export const getGames = async (filter = "") => {
+export const getGames = async (filter = "", page = 0) => {
+  const offset = page * getConfig().itemPerPage;
   let filters = getFilters(filter.includes("&") ? "&" : "|", filter);
 
-  return db.Game.findAll({
+  const { rows, count } = await db.Game.findAndCountAll({
     where: filters,
     order: [["Name", "ASC"]],
+    offset,
+    limit: 300,
     include: [
       {
         model: db.Info,
@@ -71,6 +74,12 @@ export const getGames = async (filter = "") => {
       },
     ],
   });
+
+  return { items: rows, page, totalPages: Math.ceil(count / appConfig.itemPerPage), filter, count };
+};
+
+export const getInfo = (Codes) => {
+  return db.Info.findOne({ where: { Codes } });
 };
 /****************************Scan Dir********************************************/
 export const getDirectories = async () => {
@@ -102,6 +111,7 @@ export const getJobs = () => {
 
 export const addDirectory = async (d) => {
   let isNew = false;
+  if (!d || !d.Path) return;
   try {
     let directory = await db.Directory.findOne({ where: { Path: d.Path } });
     if (fs.readdirSync(d.Path).length || directory) {

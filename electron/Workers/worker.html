@@ -52,16 +52,20 @@
               const files = winex.ListFiles(dir.Path);
               let list = [];
               for (const file of files) {
-                const mCode = file.Name.replace(/\.(rar|zip|7z)/g, "").match(/ (v|r|RJ|VO|ST|G)\d+.*\d+$/gi);
+                const mCode = file.Name.replace(/\.(rar|zip|7z)/g, "").match(/ (v|r|RJ|VO|ST|G|D|IT|VJ)\d+.*\d+$/gi);
 
                 let Codes = mCode ? mCode[0].trim() : "";
                 const Name = file.Name.replace(Codes, "").trim();
 
                 if (Codes) {
-                  const newCode = getCode(Codes, Name, file);
+                  const newCode = Codes;
                   if (codes.find((c) => c.Codes === newCode.Codes) === undefined) {
                     codes.push(newCode);
                   }
+                }
+
+                if (list.find((g) => g.Name === Name && g.DirectoryId === Id)) {
+                  send("error", "Dup: " + Name);
                 }
 
                 list.push({ Codes, Name, DirectoryId: Id, Path: file.Path });
@@ -76,7 +80,7 @@
             send("error", { error });
           }
           send("removeJob", Id);
-          send("job-done", Id);
+          send("job-done", { Id });
         }
       };
       let working = false;

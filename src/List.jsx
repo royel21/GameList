@@ -5,20 +5,36 @@ import Input from "./Components/Input";
 import usePopup from "./Hooks/usePopup.js";
 import FileContextMenu from "./Components/FileContextMenu";
 import Info from "./Info.jsx";
+import Pager from "./Components/Pager";
 import "./list.css";
 import "./popup.css";
 
 const List = ({ filter, setFilter }) => {
   const [showM, setShowM] = useState();
   const [showInfo, setShowInfo] = useState();
+  const [showAction, setShowAction] = useState(true);
 
-  const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState({
+    items: [],
+    page: 0,
+    totalPages: 0,
+    count: 0,
+  });
 
-  const load = async (ftl) => {
-    const result = await getGames(ftl);
+  const load = async (ftl, page) => {
+    const result = await getGames(ftl, page);
 
     setFilter(ftl);
-    setDatas(result);
+    setDatas({
+      ...datas,
+      items: result.items,
+      page,
+    });
+  };
+
+  const loadPage = ({ page }) => {
+    document.querySelector("#files-list")?.scrollTo(0, 0);
+    load(filter, page);
   };
 
   const onFilter = ({ target: { value } }) => load(value, 0);
@@ -32,7 +48,10 @@ const List = ({ filter, setFilter }) => {
       console.error(error);
     }
     await f.destroy().then(() => {});
-    setDatas(datas.filter((d) => d.Path !== f.Path));
+    setDatas({
+      ...datas,
+      items: datas.items.filter((d) => d.Path !== f.Path),
+    });
   };
 
   const itemClick = async (f, { target }) => {
@@ -58,7 +77,8 @@ const List = ({ filter, setFilter }) => {
     const text = clipboard
       .readText()
       .trim()
-      .replace(/:|\?|\*|<|>|\/|\\|"/g, "");
+      .replace("*", "x")
+      .replace(/:|\?|<|>|\/|\\|"/g, "");
     if (text) {
       setFilter(text);
       load(text, 0);
@@ -78,20 +98,23 @@ const List = ({ filter, setFilter }) => {
   }, [filter]);
 
   useEffect(() => {
-    document.querySelector(".title").textContent = (datas.length || 0) + " - Game List";
+    document.querySelector(".title").textContent = (datas.count || 0) + " - Game List";
   });
 
-  usePopup(datas);
+  usePopup(datas.items);
 
   return (
     <>
+      <span className="ctr-actions" onClick={() => setShowAction(!showAction)}>
+        {showAction ? "Hide" : "Show"} Actions
+      </span>
       {showInfo && <Info file={showInfo} hide={() => setShowInfo()} />}
       {showM && <FileContextMenu data={showM} hide={() => setShowM()} favs={true} />}
       <div id="list">
         <div id="files-list" onClick={() => setShowM()} onWheel={() => (showM ? setShowM() : "")}>
           <ul>
-            {datas.length ? (
-              datas.map((f, i) => (
+            {datas.items.length ? (
+              datas.items.map((f, i) => (
                 <li
                   id={f.Id}
                   key={"r-" + i}
@@ -103,10 +126,12 @@ const List = ({ filter, setFilter }) => {
                   data-msg={f.Path}
                 >
                   <span id="f-index">{(++i + "").padStart(3, "0")}:</span> {f.Name}
-                  <span className="actions">
-                    <i className={"mr-1 fas fa-edit"} onClick={() => setShowInfo(f)}></i>
-                    <i className="fas fa-trash-alt" onClick={(e) => removeRecent(f, e)}></i>
-                  </span>
+                  {showAction && (
+                    <span className="actions">
+                      <i className={"mr-1 fas fa-edit"} onClick={() => setShowInfo(f)}></i>
+                      <i className="fas fa-trash-alt" onClick={(e) => removeRecent(f, e)}></i>
+                    </span>
+                  )}
                 </li>
               ))
             ) : (
@@ -120,6 +145,7 @@ const List = ({ filter, setFilter }) => {
               <i className="fas fa-paste"></i>
             </span>
             <Input value={filter} placeholder="Write to Filter" onChange={onFilter} required={true} />
+            <Pager data={datas} setData={loadPage} />
             <span className="clear-icon fas fa-times-circle" onClick={clear}></span>
           </div>
         </div>

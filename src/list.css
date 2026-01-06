@@ -6,7 +6,23 @@
   position: absolute;
   right: 0;
 }
+#files-list .actions i:first-child {
+  margin-right: 10px;
+}
+
+#files-list .actions i:first-child:hover {
+  color: rgb(46, 145, 227);
+}
 
 .mr-1 {
   margin-right: 5px;
+}
+
+.ctr-actions {
+  position: absolute;
+  top: 44px;
+  right: 10px;
+  z-index: 999;
+  color: white;
+  cursor: pointer;
 }

@@ -1,0 +1,12 @@
+#popup p:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+#popup .file-info {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#popup > div > div {
+  margin-bottom: 6px;
+}

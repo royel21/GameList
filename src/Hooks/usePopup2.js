@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-let popup = document.getElementById("popup");
+let popup = document.getElementById("popup2");
 
 const hidePopup = (el) => {
   popup.style.display = "none";

@@ -32,6 +32,7 @@ body {
   user-select: none;
 }
 
+#popup2,
 #popup {
   display: none;
   position: absolute;
@@ -48,7 +49,15 @@ body {
   word-wrap: break-word;
   pointer-events: none;
 }
+#popup2 {
+  padding: 8px 10px;
+  max-width: calc(100% - 40px);
+  min-width: initial;
+  width: max-content;
+  font-size: 1.1rem;
+}
 
+#popup2:after,
 #popup:after {
   content: " ";
   position: absolute;
@@ -59,7 +68,7 @@ body {
   transform: rotate(45deg);
   background-color: rgba(27, 14, 209, 0.904);
 }
-
+#popup2.popup-top:after,
 #popup.popup-top:after {
   top: auto;
   bottom: -6px;

@@ -55,9 +55,10 @@ const ScanList = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const reload = () => {
+    const reload = async () => {
+      const dirs = await getDirectories();
       if (isMounted) {
-        setDirList((dirs) => [...dirs]);
+        setDirList(dirs);
       }
     };
 

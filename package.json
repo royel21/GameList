@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "start-electron": "cd ./electron && yarn electron-dev",
-    "build-electron": "vite build --emptyOutDir&&node ./update-version.js&&electron-builder --project ./electron"
+    "build-electron": "vite build --emptyOutDir&&electron-builder --project ./electron&&node ./update-version.js"
   },
   "dependencies": {
     "dayjs": "^1.11.19",

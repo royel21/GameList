@@ -7,12 +7,21 @@ const FileContextMenu = ({ data, hide }) => {
   const [offsetX, setOffsetX] = useState(0);
 
   const cpName = () => clipboard.writeText(file.Name);
+  const cpCodes = () => {
+    let code = file.Codes;
+    if (!code) {
+      let match = file.Name.match(/(RJ|v|r|ST|IT|D|G)\d+/);
+      code = match ? match[0] : "";
+    }
+    clipboard.writeText(code);
+  };
 
   const onClick = async (e) => {
     const ctxCommands = {
       open: () => shell.openExternal(file.Path),
       "open-ex": () => shell.showItemInFolder(file.Path),
       "cp-name": cpName,
+      "cp-codes": cpCodes,
       "cp-path": () => clipboard.writeText(file.Path),
     };
 
@@ -47,6 +56,9 @@ const FileContextMenu = ({ data, hide }) => {
           </li>
           <li id="cp-name" onClick={onClick}>
             Copy Name
+          </li>
+          <li id="cp-codes" onClick={onClick}>
+            Copy Codes
           </li>
           <li id="cp-path" onClick={onClick}>
             Copy Path

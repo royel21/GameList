@@ -15,7 +15,7 @@ module.exports = (sequelize, { INTEGER, STRING }) => {
     {
       uniqueKeys: {
         Uniq_File: {
-          fields: ["Name", "Path"],
+          fields: ["Name", "DirectoryId", "Codes"],
         },
       },
     }

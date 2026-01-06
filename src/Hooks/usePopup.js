@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { formatDate } from "../Utils/utils";
+import "./popup.css";
 
 let popup = document.getElementById("popup");
 
@@ -9,16 +10,34 @@ const hidePopup = (el) => {
   el.classList?.remove("popup-show");
 };
 
+const getAltName = (altname, title = "Alt Name") => {
+  let data = "";
+  if (altname) {
+    data = altname
+      .split("\n")
+      .map((alt) => `<p>${alt}</p>`)
+      .join("");
+  }
+
+  return altname
+    ? `<div>
+       <strong>${title}: </strong>
+       ${data}
+    </div>`
+    : "";
+};
+
 const showPop = (el, file) => {
   const rect = el.getBoundingClientRect();
   popup.style.display = "block";
-  popup.innerHTML = `
+  popup.innerHTML = `<div class="file-info">
     ${file?.Codes ? `<div><strong>Code(s): </strong>${file.Codes}</div>` : ""}
-    ${file.Info?.AltName ? `<div><strong>Alt Names: </strong>${file.Info?.AltName}</div>` : ""}
+    ${getAltName(file.Info?.AltName)}
     ${file.Info?.Company ? `<div><strong>Company: </strong>${file.Info?.Company}</div>` : ""}
     ${file.Info?.ReleaseDate ? `<div><strong>Release: </strong>${formatDate(file.Info?.ReleaseDate)}</div>` : ""}
-    ${file.Info?.Description ? `<div><strong>Description: </strong>${file.Info?.Description}</div>` : ""}
+    ${getAltName(file.Info?.Description, "Description")}
     <div><strong>Path: </strong>${file.Path}</div>
+    <div>
   `;
 
   let top = rect.top + 8 + rect.height;

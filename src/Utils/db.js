@@ -59,9 +59,11 @@ export const getGames = async (filter = "", page = 0) => {
   const offset = page * getConfig().itemPerPage;
   let filters = getFilters(filter.includes("&") ? "&" : "|", filter);
 
+  const sortByName = db.sqlze.literal(`REPLACE(REPLACE(REPLACE(Games.Name, "@", "#"), "-", "#"), "[","#") ASC`);
+
   const { rows, count } = await db.Game.findAndCountAll({
     where: filters,
-    order: [["Name", "ASC"]],
+    order: [[sortByName]],
     offset,
     limit: 300,
     include: [

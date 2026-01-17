@@ -51,7 +51,7 @@ const Info = ({ file, hide }) => {
 
     if (file.Name !== data.Name) {
       file.Name = data.Name.replace(data.Codes, "")
-        .replace(/\.(zip|rar|7z)$/, "")
+        .replace(/\.(zip|rar|7z|apk)$/, "")
         .trim();
 
       const basePath = path.dirname(file.Path);

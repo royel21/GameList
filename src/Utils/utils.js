@@ -145,6 +145,6 @@ export const isDate = (val) => {
 };
 
 export const getCodes = (data) => {
-  const mCode = data.Name.replace(/\.(rar|zip|7z)$/g, "").match(/ (v|r|RJ|VO|ST|G|D|IT|VJ)\d+.*\d+$/g);
+  const mCode = data.Name.replace(/\.(rar|zip|7z)$/g, "").match(/ (v|r|RJ|RA|VO|ST|G|D|IT|VJ)\d+.*\d+$/g);
   return mCode ? mCode[0].trim() : "";
 };
